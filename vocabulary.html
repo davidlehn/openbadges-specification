@@ -133,11 +133,11 @@
     <section>
       <h2>Classes</h2>
 
-      <section id="" about="https://w3id.org/credentials/#"
+      <section id="Credential" about="https://w3id.org/credentials/#Credential"
         typeof="rdfs:Class">
-        <h3><span property="rdfs:label"></span></h3>
+        <h3><span property="rdfs:label">Credential</span></h3>
           <p property="rdfs:comment">
-
+            A verifiable set of claims made by an issuer about a recipient, expressed in terms of properties claimed about the recipient and defined achievements conferred on the recipient.
           </p>
           <dl>
             <dt>Status</dt>
@@ -148,10 +148,85 @@
             <dd></dd>
           </dl>
           <p>
-            The following example...
+            The following example is a signed Credential issued by Big University and received by Bob, claiming a birthdate and a Bachelor's Degree defined achivement (badge). 
           </p>
           <pre class="example prettyprint language-jsonld">
+{
+  "@context": "https://w3id.org/credentials/v1",
+  "credential": [{
+    "id": "http://biguniversity.gov/credentials/53091",
+    "type": "UniversityDegree",
+    "claim": {
+      "id": "https://example.com/identities/bob",
+      "name": "Bob Bobman",
+      "birthdate": "1985-12-14",
+      "badges": [
+        {
+          "id": "https://biguniversity.edu/credentials/53091/badge",
+          "type": "BadgeAssertion"
+          "recipient": {
+            identity: "https://example.com/identities/bob",
+            type: "id",
+            "hashed": false,
+          },
+          "issueDate": "2015-03-01",
+          badge: {
+            "id": "https://bigunivertsity.edu/credentials/BA",
+            "type": "BadgeDefinition"
+            "name": "Bachelor of Arts",
+            "description": "The gold standard of credentials in liberal arts education",
+            "image": "https://biguniversity.edu/credentials/BA/image",
+            "criteria": "https://biguniversity.edu/credentials/BA/criteria",
+            "issuer": {
+              "id": "https://biguniversity.edu/id",
+              "type": "BadgeIssuer"
+              "name": "Big University",
+              "url": "http://biguniversity.edu"
+              "publicKey": "https://biguniversity.edu/keys/1"
+            }
+          }
+        }
+      ]
+    },
+    "expires": "2018-01-01",
+    "signature": {
+       "type": "GraphSignature2012",
+       "creator": "https://biguniversity.edu/keys/1",
+       "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
+    }
+  }
+}
+          </pre>
+      </section>
 
+
+      <section id="ClaimSet" about="https://w3id.org/credentials/#ClaimSet"
+        typeof="rdfs:Class">
+        <h3><span property="rdfs:label">Claim Set</span></h3>
+          <p property="rdfs:comment">
+            The claims made by a Credential are packaged as a Claim Set, a set of properties asserted about the recipient. Each claim is a property-value pair, where the issuer asserts one quality or attribute of a credential recipient or of an achievement attributable to the earner. The property name takes the form of an IRI, dereferencable within the document context to a term definition.
+          </p>
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Parent Class</dt>
+            <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Class</a></dd>
+            <dt>Common Properties</dt>
+            <dd></dd>
+          </dl>
+          <p>
+            The following example, which would appear as a component of a Credential is a set of claims defining the birthdate and governmentId number that apply to a particular recipient identity. The IRI of the recipient identity is the id (aliased in the context to JSON-LD keyword "@id") of the claim set property. Each of the claim terms that appear here are mapped to an IRI in the context. Otherwise, they would appear as full IRIs.
+          </p>
+          <pre class="example prettyprint language-jsonld">
+{
+  "@context": "https://w3id.org/credentials/v1"
+  ...
+  "claim": {
+    "id": "https://example.org/identities/alice",
+    "birthdate": "1968-10-14",
+    "governmentId": "123-99-2830"
+  }
+}
         </pre>
       </section>
 
@@ -173,8 +248,10 @@
             The following example...
           </p>
           <pre class="example prettyprint language-jsonld">
-
-        </pre>
+{
+"example": "etc"
+}
+          </pre>
       </section>
         
     </section>
@@ -190,21 +267,21 @@
           </p>
 
           <dl>
-          <dt>Status</dt>
-          <dd property="vs:term_status">unstable</dd>
-          <dt>Attribute of</dt>
-          <dd>
-            <a property="rdfs:domain" href="http://schema.org/Intangible">Intangible</a>
-          </dd>
-          <dt>Typically used by</dt>
-          <dd>
-            <a href="#Credential">Credential</a>
-          </dd>
-          <dt>Associated value must be an</dt>
-          <dd>
-            <a property="rdfs:range" href="#ClaimSet">Claim Set</a>
-          </dd>
-        </dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Intangible">Intangible</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
+              <a href="#Credential">Credential</a>
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              <a property="rdfs:range" href="#ClaimSet">Claim Set</a>
+            </dd>
+          </dl>
 
           <p>
             The following example expresses an set of claims about an individual. The claim has the id (here aliased to the JSON-LD keyword "@id") of the identity that is the recipient of the credential and the subject of the claims.
@@ -230,21 +307,21 @@
           </p>
 
           <dl>
-          <dt>Status</dt>
-          <dd property="vs:term_status">unstable</dd>
-          <dt>Attribute of</dt>
-          <dd>
-            <a property="rdfs:domain" href="http://schema.org/Intangible">Intangible</a>
-          </dd>
-          <dt>Typically used by</dt>
-          <dd>
-            <a href="#Credential">Credential</a>
-          </dd>
-          <dt>Associated value must be an</dt>
-          <dd>
-            <a property="rdfs:range" href="#ClaimSet">Claim Set</a>
-          </dd>
-        </dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Intangible">Intangible</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
+              <a href="#Credential">Credential</a>
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              <a property="rdfs:range" href="#ClaimSet">Claim Set</a>
+            </dd>
+          </dl>
 
           <p>
             The following example...
