@@ -163,25 +163,25 @@
       "badges": [
         {
           "id": "https://biguniversity.edu/credentials/53091/badge",
-          "type": "BadgeAssertion"
+          "type": "Assertion",
           "recipient": {
-            identity: "https://example.com/identities/bob",
-            type: "id",
-            "hashed": false,
+            "identity": "https://example.com/identities/bob",
+            "type": "id",
+            "hashed": false
           },
           "issueDate": "2015-03-01",
-          badge: {
+          "badge": {
             "id": "https://bigunivertsity.edu/credentials/BA",
-            "type": "BadgeDefinition"
+            "type": "BadgeClass",
             "name": "Bachelor of Arts",
             "description": "The gold standard of credentials in liberal arts education",
             "image": "https://biguniversity.edu/credentials/BA/image",
             "criteria": "https://biguniversity.edu/credentials/BA/criteria",
             "issuer": {
               "id": "https://biguniversity.edu/id",
-              "type": "BadgeIssuer"
+              "type": ["BadgeIssuer", "Identity"],
               "name": "Big University",
-              "url": "http://biguniversity.edu"
+              "url": "http://biguniversity.edu",
               "publicKey": "https://biguniversity.edu/keys/1"
             }
           }
@@ -194,7 +194,7 @@
        "creator": "https://biguniversity.edu/keys/1",
        "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
     }
-  }
+  }]
 }
           </pre>
       </section>
@@ -230,26 +230,39 @@
         </pre>
       </section>
 
-      <section id="" about="https://w3id.org/credentials/#"
+      <section id="Defined Achievement" about="https://w3id.org/credentials/#DefinedAchievement"
         typeof="rdfs:Class">
-        <h3><span property="rdfs:label"></span></h3>
+        <h3><span property="rdfs:label">Defined Achievement</span></h3>
           <p property="rdfs:comment">
-
+            A Defined Achievement (also known as a Badge Class) is a specific claim intended to be made about many recipients. A credential class may be specific to one issuer or shared between multiple issuers. It is defined with a name, description, may link to a page describing detailed criteria, and may be visually represented by an image. An issuer property may point to the entity that defined the achievement.
           </p>
           <dl>
             <dt>Status</dt>
             <dd property="vs:term_status">unstable</dd>
             <dt>Parent Class</dt>
-            <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Class</a></dd>
+            <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Claim Set</a></dd>
             <dt>Common Properties</dt>
-            <dd></dd>
+            <dd>
+              name, description, image, criteria, Issuer, alignment, tags
+            </dd>
           </dl>
           <p>
-            The following example...
+            The following example shows a defined achievement that an example model rocketry club established to issue to recipients who met a predetermined level of expertise in rocketry, as assessed within that organization's context.
           </p>
           <pre class="example prettyprint language-jsonld">
 {
-"example": "etc"
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "https://modelrockets.example.com/badges/l3r",
+  "type": "BadgeClass",
+  "name": "Level 3 Model Rocketeer",
+  "description": "Recipient has demonstrated a thorough understanding of rocket safety procetures and rocket construction techniques",
+  "image": "https://modelrockets.example.com/badges/l3r/image",
+  "criteria": "https://modelrockets.example.com/badges/l3r/criteria",
+  "issuer": {
+    "id": "https://modelrockets.example.com/id",
+    "name": "Model Rockets Example Club",
+    "url": "https://modelrockets.example.com"
+  }
 }
           </pre>
       </section>
@@ -260,10 +273,14 @@
     <section>
       <h2>Properties</h2>
 
-      <section id="Claim" about="https://w3id.org/credentials/#Claim" typeof="rdfs:Property">
-          <h3><span property="rdfs:label">Claim</span></h3>
+      <section id="Claim" about="https://w3id.org/credentials/#claim" typeof="rdfs:Property">
+          <h3><span property="rdfs:label">claim</span></h3>
           <p property="rdfs:comment">
             A claim is the statement of trust an issuer makes about a credential recipient. A set of property value pairs, where in each property the issuer asserts one quality or attribute of a credential earner or of an achievement attributable to the earner. Each claim property name is dereferencable to a term definition. 
+          </p>
+
+          <p class="issue">
+            Can we use properties in a generic way like this? Or should this appear in the glossary section at the top because the IRI for a claim could be most anything.
           </p>
 
           <dl>
@@ -275,11 +292,11 @@
             </dd>
             <dt>Typically used by</dt>
             <dd>
-              <a href="#Credential">Credential</a>
+              <a href="#Claim">Claim Set</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
-              <a property="rdfs:range" href="#ClaimSet">Claim Set</a>
+              ... something that makes sense for the term?
             </dd>
           </dl>
 
@@ -300,64 +317,18 @@
           </pre>
         </section>
 
-        <section id="" about="https://w3id.org/credentials/#" typeof="rdfs:Property">
-          <h3><span property="rdfs:label"></span></h3>
-          <p property="rdfs:comment">
-            
-          </p>
 
-          <dl>
-            <dt>Status</dt>
-            <dd property="vs:term_status">unstable</dd>
-            <dt>Attribute of</dt>
-            <dd>
-              <a property="rdfs:domain" href="http://schema.org/Intangible">Intangible</a>
-            </dd>
-            <dt>Typically used by</dt>
-            <dd>
-              <a href="#Credential">Credential</a>
-            </dd>
-            <dt>Associated value must be an</dt>
-            <dd>
-              <a property="rdfs:range" href="#ClaimSet">Claim Set</a>
-            </dd>
-          </dl>
-
-          <p>
-            The following example...
-          </p>
-          <pre class="example prettyprint language-jsonld">
-
-          </pre>
-        </section>
-
-    </section>
+  </section>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <section class="appendix" id="acknowledgements" typeof="bibo:Chapter" resource="#acknowledgements" property="bibo:hasPart">
-      <!--OddPage--><h2 id="h-acknowledgements" resource="#h-acknowledgements"><span property="xhv:role" resource="xhv:heading"><span class="secno">A. </span>Acknowledgements</span></h2>
-      <p>
-        Many thanks to Robin Berjon for making our lives so much easier with his cool tool.
-      </p>
-    </section>
+  <section class="appendix" id="acknowledgements" typeof="bibo:Chapter" resource="#acknowledgements" property="bibo:hasPart">
+    <!--OddPage--><h2 id="h-acknowledgements" resource="#h-acknowledgements"><span property="xhv:role" resource="xhv:heading"><span class="secno">A. </span>Acknowledgements</span></h2>
+    <p>
+      Thanks to the Credentials Community Group and the Badge Alliance for contributions, feedback, and detailed thinking that went into this document.
+    </p>
+  </section>
   
 
   </body>
