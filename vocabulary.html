@@ -61,7 +61,7 @@
       </p>
 
       <p>
-        The terms defined here serve use cases identified by the Credentials Community Group
+        The terms defined here serve use cases identified by the Credentials Community Group.
       </p>
 
     </section>
@@ -78,9 +78,13 @@
       </section> 
 
       <section>
-        <h3>Issuer</h3>
+        <h3 id="#Issuer">Issuer</h3>
         <p>
           An entity that creates and assigns credentials to recipients. It may be expressed as an <a href="#Identity">Identity</a> document.
+        </p>
+
+        <p class="issue">
+          This and potentially a couple other terms may need to be moved down or duplicated as a class, since we're referencing it as a class that may be included in credentials.
         </p>
       </section>
 
@@ -142,7 +146,8 @@
     <section>
       <h2>Classes</h2>
 
-      <section id="Defined Achievement" about="https://w3id.org/credentials/#DefinedAchievement"
+
+      <section id="Identity" about="https://w3id.org/credentials/#Identity"
         typeof="rdfs:Class">
         <h3><span property="rdfs:label">Identity</span></h3>
           <p property="rdfs:comment">
@@ -173,29 +178,30 @@
           </pre>
       </section>
 
+
       <section id="Credential" about="https://w3id.org/credentials/#Credential"
         typeof="rdfs:Class">
         <h3><span property="rdfs:label">Credential</span></h3>
-          <p property="rdfs:comment">
-            A verifiable set of claims made by an issuer about a recipient, expressed in terms of properties claimed about the recipient and defined achievements conferred on the recipient.
-          </p>
-          <dl>
-            <dt>Status</dt>
-            <dd property="vs:term_status">unstable</dd>
-            <dt>Parent Class</dt>
-            <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Class</a></dd>
-            <dt>Common Properties</dt>
-            <dd></dd>
-          </dl>
-          <p>
-            The following example is a signed Credential issued by Big University and received by Bob, claiming a name and a birthdate.
-          </p>
-          <pre class="example prettyprint language-jsonld">
+        <p property="rdfs:comment">
+          A verifiable set of claims made by an issuer about a recipient, expressed in terms of properties claimed about the recipient and defined achievements conferred on the recipient.
+        </p>
+        <dl>
+          <dt>Status</dt>
+          <dd property="vs:term_status">unstable</dd>
+          <dt>Parent Class</dt>
+          <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Class</a></dd>
+          <dt>Common Properties</dt>
+          <dd></dd>
+        </dl>
+        <p>
+          The following example is a signed Credential issued by Big University and received by Bob, claiming a name and a birthdate. The type of credential must be a fully qualified IRI or dereferencable to an IRI in the document context.
+        </p>
+        <pre class="example prettyprint language-jsonld">
 {
   "@context": "https://w3id.org/credentials/v1",
   "credential": [{
     "id": "http://biguniversity.gov/credentials/53091",
-    "type": "UniversityDegree",
+    "type": "BasicInfo",
     "claim": {
       "id": "https://example.com/identities/bob",
       "name": "Bob Bobman",
@@ -209,32 +215,36 @@
     }
   }]
 }
-          </pre>
+        </pre>
       </section>
 
 
       <section id="ClaimSet" about="https://w3id.org/credentials/#ClaimSet"
         typeof="rdfs:Class">
         <h3><span property="rdfs:label">Claim Set</span></h3>
-          <p property="rdfs:comment">
-            The claims made by a Credential are packaged as a Claim Set, a set of properties asserted about the recipient. Each claim is a property-value pair, where the issuer asserts one quality or attribute of a credential recipient or of an achievement attributable to the earner. The property name takes the form of an IRI, dereferencable within the document context to a term definition.
-          </p>
-          <dl>
-            <dt>Status</dt>
-            <dd property="vs:term_status">unstable</dd>
-            <dt>Parent Class</dt>
-            <dd><a property="rdfs:subclassOf" href="#Credential">Credential</a></dd>
-            <dt>Common Properties</dt>
-            <dd>
-              <a href="#id">id</a>, 
-              <a href="#badge">badge</a>,
-              <a href="#claim">claims</a>
-            </dd>
-          </dl>
-          <p>
-            The following example, which would appear as a component of a Credential is a set of claims defining the birthdate and governmentId number that apply to a particular recipient identity. The IRI of the recipient identity is the id (aliased in the context to JSON-LD keyword "@id") of the claim set property. Each of the claim terms that appear here are mapped to an IRI in the context. Otherwise, they would appear as full IRIs.
-          </p>
-          <pre class="example prettyprint language-jsonld">
+        <p property="rdfs:comment">
+          The claims made by a Credential are packaged as a Claim Set, a set of properties asserted about the recipient. Each claim is a property-value pair, where the issuer asserts one quality or attribute of a credential recipient or of an achievement attributable to the earner. Each property name takes the form of an IRI, dereferencable within the document context to a term definition.
+        </p>
+        <dl>
+          <dt>Status</dt>
+          <dd property="vs:term_status">unstable</dd>
+          <dt>Parent Class</dt>
+          <dd><a property="rdfs:subclassOf" href="#Credential">Credential</a></dd>
+          <dt>Common Properties</dt>
+          <dd>
+            <a href="#id">id</a>, 
+            <a href="#badge">badge</a>,
+            <a href="#claim">claims</a>
+          </dd>
+        </dl>
+        <p>
+          The following example, which would appear as a component of a Credential is a set of claims defining the birthdate and governmentId number that apply to a particular recipient identity. The IRI of the recipient identity is the id (aliased in the context to JSON-LD keyword "@id") of the claim set property. Each of the claim terms that appear here are mapped to an IRI in the context. Otherwise, they would appear as full IRIs.
+        </p>
+
+        <p class="issue">
+          What property types are really going to appear in the credentials context? Do birthdate and governmentId make the cut?
+        </p>
+        <pre class="example prettyprint language-jsonld">
 {
   "@context": "https://w3id.org/credentials/v1"
   ...
@@ -244,29 +254,29 @@
     "governmentId": "123-99-2830"
   }
 }
-        </pre>
+      </pre>
       </section>
 
       <section id="Defined Achievement" about="https://w3id.org/credentials/#DefinedAchievement"
         typeof="rdfs:Class">
         <h3><span property="rdfs:label">Defined Achievement</span></h3>
-          <p property="rdfs:comment">
-            A Defined Achievement (also known as a Badge Class) is a specific claim intended to be made about many recipients. A credential class may be specific to one issuer or shared between multiple issuers. It is defined with a name, description, may link to a page describing detailed criteria, and may be visually represented by an image. An issuer property may point to the entity that defined the achievement.
-          </p>
-          <dl>
-            <dt>Status</dt>
-            <dd property="vs:term_status">unstable</dd>
-            <dt>Parent Class</dt>
-            <dd><a property="rdfs:subclassOf" href="#badgeAssertion">badgeAssertion</a></dd>
-            <dt>Common Properties</dt>
-            <dd>
-              name, description, image, criteria, Issuer, alignment, tags
-            </dd>
-          </dl>
-          <p>
-            The following example shows a defined achievement that an example model rocketry club established to issue to recipients who met a predetermined level of expertise in rocketry, as assessed within that organization's context.
-          </p>
-          <pre class="example prettyprint language-jsonld">
+        <p property="rdfs:comment">
+          A Defined Achievement (also known as a Badge Class) is a specific claim intended to be made about many recipients. A credential class may be specific to one issuer or shared between multiple issuers. It is defined with a name, description, may link to a page describing detailed criteria, and may be visually represented by an image. An issuer property may point to the entity that defined the achievement.
+        </p>
+        <dl>
+          <dt>Status</dt>
+          <dd property="vs:term_status">unstable</dd>
+          <dt>Parent Class</dt>
+          <dd><a property="rdfs:subclassOf" href="#badgeAssertion">badgeAssertion</a></dd>
+          <dt>Common Properties</dt>
+          <dd>
+            name, description, image, criteria, Issuer, alignment, tags
+          </dd>
+        </dl>
+        <p>
+          The following example shows a defined achievement that an example model rocketry club established to issue to recipients who met a predetermined level of expertise in rocketry, as assessed within that organization's context.
+        </p>
+        <pre class="example prettyprint language-jsonld">
 {
   "@context": "https://w3id.org/credentials/v1",
   "id": "https://modelrockets.example.com/badges/l3r",
@@ -287,25 +297,24 @@
         <section id="DefinedAchievementAssertion" about="https://w3id.org/credentials/#DefinedAchievementAssertion"
         typeof="rdfs:Class">
         <h3><span property="rdfs:label">Defined Achievement Assertion</span></h3>
-          <p property="rdfs:comment">
-            An instance of a Defined Achievement as it applies to one issuer. 
-            A Defined Achievement may be added to a Credential within a Defined Achievement Assertion.
-
-          </p>
-          <dl>
-            <dt>Status</dt>
-            <dd property="vs:term_status">unstable</dd>
-            <dt>Parent Class</dt>
-            <dd><a property="rdfs:subclassOf" href="#badgeAssertion">badgeAssertion</a></dd>
-            <dt>Common Properties</dt>
-            <dd>
-              name, description, image, criteria, Issuer, alignment, tags
-            </dd>
-          </dl>
-          <p>
-            This example shows a "Bachelor of Arts" Defined Achievement as issued in a <a href="#Credential">Credential</a> and displayed within an <a href="#Identity">Identity</a> document. It appears as a child of a <a href="#badgeAssertion">badgeAssertion</a> claim type. the badge IRI ("id") value also appears in the Identity's "badge" property as an easily-queried listing of defined achievmements received by this identity.
-          </p>
-          <pre class="example prettyprint language-jsonld">
+        <p property="rdfs:comment">
+          An instance of a Defined Achievement as it applies to one issuer. 
+          A Defined Achievement may be added to a Credential within a Defined Achievement Assertion.
+        </p>
+        <dl>
+          <dt>Status</dt>
+          <dd property="vs:term_status">unstable</dd>
+          <dt>Parent Class</dt>
+          <dd><a property="rdfs:subclassOf" href="#badgeAssertion">badgeAssertion</a></dd>
+          <dt>Common Properties</dt>
+          <dd>
+            image, Issuer, <a href="#DefinedAchievement">Defined Achievement</a>
+          </dd>
+        </dl>
+        <p>
+          This example shows a "Bachelor of Arts" Defined Achievement as issued in a <a href="#Credential">Credential</a> and displayed within an <a href="#Identity">Identity</a> document. It appears as a child of a <a href="#badgeAssertion">badgeAssertion</a> claim type. the badge IRI ("id") value also appears in the Identity's "badge" property as an easily-queried listing of defined achievmements received by this identity.
+        </p>
+        <pre class="example prettyprint language-jsonld">
 {
   "@context": "https://w3id.org/credentials/v1",
   "id": "https://example.com/identities/bob",
@@ -357,7 +366,7 @@
     }
   }]
 }
-          </pre>
+        </pre>
       </section>
         
     </section>
@@ -367,36 +376,36 @@
       <h2>Properties</h2>
 
       <section id="Claim" about="https://w3id.org/credentials/#claim" typeof="rdfs:Property">
-          <h3><span property="rdfs:label">claim</span></h3>
-          <p property="rdfs:comment">
-            A claim is the statement of trust an issuer makes about a credential recipient. A set of property value pairs, where in each property the issuer asserts one quality or attribute of a credential earner or of an achievement attributable to the earner. Each claim property name is dereferencable to a term definition. 
-          </p>
+        <h3><span property="rdfs:label">claim</span></h3>
+        <p property="rdfs:comment">
+          A claim is the statement of trust an issuer makes about a credential recipient. A set of property value pairs, where in each property the issuer asserts one quality or attribute of a credential earner or of an achievement attributable to the earner. Each claim property name is dereferencable to a term definition. 
+        </p>
 
-          <p class="issue">
-            Can we use properties in a generic way like this? Or should this appear in the glossary section at the top because the IRI for a claim could be most anything.
-          </p>
+        <p class="issue">
+          Can we use properties in a generic way like this? Or should this appear in the glossary section at the top because the IRI for a claim could be most anything.
+        </p>
 
-          <dl>
-            <dt>Status</dt>
-            <dd property="vs:term_status">unstable</dd>
-            <dt>Attribute of</dt>
-            <dd>
-              <a property="rdfs:domain" href="http://schema.org/Intangible">Intangible</a>
-            </dd>
-            <dt>Typically used by</dt>
-            <dd>
-              <a href="#Claim">Claim Set</a>
-            </dd>
-            <dt>Associated value must be an</dt>
-            <dd>
-              ... something that makes sense for the term?
-            </dd>
-          </dl>
+        <dl>
+          <dt>Status</dt>
+          <dd property="vs:term_status">unstable</dd>
+          <dt>Attribute of</dt>
+          <dd>
+            <a property="rdfs:domain" href="http://schema.org/Intangible">Intangible</a>
+          </dd>
+          <dt>Typically used by</dt>
+          <dd>
+            <a href="#Claim">Claim Set</a>
+          </dd>
+          <dt>Associated value must be an</dt>
+          <dd>
+            ... something that makes sense for the term?
+          </dd>
+        </dl>
 
-          <p>
-            The following example expresses an set of claims about an individual. The claim set has the id (here aliased to the JSON-LD keyword "@id") of the identity that is the recipient of the credential and the subject of the claims. Each claim ("image" and "name") have keywords that are terms defined in the document context that map these shorthand names to full IRIs.
-          </p>
-          <pre class="example prettyprint language-jsonld">
+        <p>
+          The following example expresses an set of claims about an individual. The claim set has the id (here aliased to the JSON-LD keyword "@id") of the identity that is the recipient of the credential and the subject of the claims. Each claim ("image" and "name") have keywords that are terms defined in the document context that map these shorthand names to full IRIs.
+        </p>
+        <pre class="example prettyprint language-jsonld">
 {
   "@context": ["https://w3id.org/credentials/v1", "https://w3id.org/identity/v1"],
   "id": "http://example.com/issuedCredentials/5",
