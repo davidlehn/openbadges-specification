@@ -29,6 +29,12 @@
   </script>
 
   <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/W3C-ED"><!--[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]-->
+
+  <style type="text/css">
+  .example {
+    overflow-x: scroll;
+  }
+  </style>
   </head>
 
   <body class="h-entry" role="document" id="respecDocument">
@@ -257,7 +263,7 @@
       </pre>
       </section>
 
-      <section id="Defined Achievement" about="https://w3id.org/credentials/#DefinedAchievement"
+      <section id="DefinedAchievement" about="https://w3id.org/credentials/#DefinedAchievement"
         typeof="rdfs:Class">
         <h3><span property="rdfs:label">Defined Achievement</span></h3>
         <p property="rdfs:comment">
@@ -267,12 +273,15 @@
           <dt>Status</dt>
           <dd property="vs:term_status">unstable</dd>
           <dt>Parent Class</dt>
-          <dd><a property="rdfs:subclassOf" href="#badgeAssertion">badgeAssertion</a></dd>
+          <dd><a property="rdfs:subclassOf" href="#DefinedAchievementAssertion">Defined Achievement Assertion</a></dd>
           <dt>Common Properties</dt>
           <dd>
             name, description, image, criteria, Issuer, alignment, tags
           </dd>
         </dl>
+        <p class="issue">
+          Would Defined Achievement Assertion really be the parent class here? An instance of DAA would appear as a document parent of an instance of this class, but I don't know if that's really what makes the relationship.
+        </p>
         <p>
           The following example shows a defined achievement that an example model rocketry club established to issue to recipients who met a predetermined level of expertise in rocketry, as assessed within that organization's context.
         </p>
@@ -424,7 +433,7 @@
         <section id="name" about="https://schema.org/name" typeof="rdfs:Property">
           <h3><span property="rdfs:label">name</span></h3>
           <p property="rdfs:comment">
-            The name of an entity, which could apply to an Identity or a Defined Credential.
+            The name of an entity, which could apply to an Identity or a Defined Achievement.
           </p>
 
           <dl>
@@ -437,7 +446,7 @@
             <dt>Typically used by</dt>
             <dd>
               <a href="#Identity">Identity</a>, 
-              <a href="#DefinedCredential">Defined Credential</a>
+              <a href="#DefinedAchievement">Defined Achievement</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
@@ -450,7 +459,7 @@
         <section id="description" about="https://schema.org/description" typeof="rdfs:Property">
           <h3><span property="rdfs:label">description</span></h3>
           <p property="rdfs:comment">
-            A short description of the defining characteristics of an entity, typically a Defined Credential.
+            A short description of the defining characteristics of an entity, typically a Defined Achievement.
           </p>
 
           <dl>
@@ -463,7 +472,7 @@
             <dt>Typically used by</dt>
             <dd>
               <a href="#Identity">Identity</a>, 
-              <a href="#DefinedCredential">Defined Credential</a>
+              <a href="#DefinedAchievement">Defined Achievement</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
@@ -473,10 +482,10 @@
         </section>
 
 
-        <section id="description" about="https://schema.org/image" typeof="rdfs:Property">
+        <section id="image" about="https://schema.org/image" typeof="rdfs:Property">
           <h3><span property="rdfs:label">image</span></h3>
           <p property="rdfs:comment">
-            An image representing the thing, typically an Identity or a Defined Credential.
+            An image representing the thing, typically an Identity or a Defined Achievement.
           </p>
 
           <dl>
@@ -489,8 +498,8 @@
             <dt>Typically used by</dt>
             <dd>
               <a href="#Identity">Identity</a>, 
-              <a href="#DefinedCredential">Defined Credential</a>,
-              <a href="#DefinedCredentialAssertion">Defined Credential Assertion</a>,
+              <a href="#DefinedAchievement">Defined Achievement</a>,
+              <a href="#DefinedAchievementAssertion">Defined Achievement Assertion</a>,
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
@@ -499,7 +508,7 @@
           </dl>
 
           <p class="issue">
-            Historically in the Open Badges specification, the image property in either Defined Credential (BadgeClass) or Defined Credential Assertion could optionally be represented as a dataURI instead of a URL. This was suboptimal for a couple reasons. Should that option be outlawed, or is there a graceful way to denote that something might be an @id or a dataURI? Also, what markup is appropriate for a remote linked resource in the "associated value" field?
+            Historically in the Open Badges specification, the image property in either Defined Achievement (BadgeClass) or Defined Achievement Assertion could optionally be represented as a dataURI instead of a URL. This was suboptimal for a couple reasons. Should that option be outlawed, or is there a graceful way to denote that something might be an @id or a dataURI? Also, what markup is appropriate for a remote linked resource in the "associated value" field?
           </p>
         </section>
 
@@ -520,7 +529,7 @@
             <dt>Typically used by</dt>
             <dd>
               <a href="#Credential">Credential</a>, 
-              <a href="#DefinedCredentialAssertion">DefinedCredentialAssertion</a>
+              <a href="#DefinedAchievementAssertion">DefinedAchievementAssertion</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
@@ -547,7 +556,7 @@
             <dt>Typically used by</dt>
             <dd>
               <a href="#Credential">Credential</a>, 
-              <a href="#DefinedCredentialAssertion">DefinedCredentialAssertion</a>
+              <a href="#DefinedAchievementAssertion">DefinedAchievementAssertion</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
@@ -560,7 +569,7 @@
         <section id="criteria" about="https://w3id.org/credentials/#criteria" typeof="rdfs:Property">
           <h3><span property="rdfs:label">criteria</span></h3>
           <p property="rdfs:comment">
-            Requirements by which issuing a credential may be judged. Criteria serve to describe a Defined Credential more fully than its description and provide guidance to Issuers, Recipients, and Consumers.
+            Requirements by which issuing a credential may be judged. Criteria serve to describe a Defined Achievement more fully than its description and provide guidance to Issuers, Recipients, and Consumers.
           </p>
 
           <dl>
@@ -572,7 +581,7 @@
             </dd>
             <dt>Typically used by</dt>
             <dd>
-              <a href="#DefinedCredential">Defined Credential</a>
+              <a href="#DefinedAchievement">Defined Achievement</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
@@ -601,7 +610,7 @@
             </dd>
             <dt>Typically used by</dt>
             <dd>
-              <a href="#DefinedCredentialAssertion">Defined Credential Assertion</a>
+              <a href="#DefinedAchievementAssertion">Defined Achievement Assertion</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
@@ -618,7 +627,7 @@
         <section id="tags" about="https://schema.org/keywords" typeof="rdfs:Property">
           <h3><span property="rdfs:label">tags</span></h3>
           <p property="rdfs:comment">
-            Relevant keywords or tags used to describe an identity or defined credential. Open vocabulary: any term may be used.
+            Relevant keywords or tags used to describe an Identity or Defined Achievement. Open vocabulary: any term may be used.
           </p>
 
           <dl>
@@ -631,7 +640,7 @@
             <dt>Typically used by</dt>
             <dd>
               <a href="#Identity">Identity</a>, 
-              <a href="#DefinedCredential">Defined Credential</a>
+              <a href="#DefinedAchievement">Defined Achievement</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
@@ -666,7 +675,7 @@
             </dd>
             <dt>Typically used by</dt>
             <dd>
-              <a href="#DefinedCredentialAssertion">Defined Credential Assertion</a>
+              <a href="#DefinedAchievementAssertion">Defined Achievement Assertion</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
