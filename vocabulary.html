@@ -166,7 +166,7 @@
           <p>
             The following example shows an Identity document, making its own claims about properties of the subject.
           </p>
-          <pre class="example prettyprint language-jsonld">
+          <pre class="example highlight language-jsonld">
 {
   "@context": "https://w3id.org/credentials/v1",
   "id": "https://example.com/identities/bob",
@@ -196,7 +196,7 @@
         <p>
           The following example is a signed Credential issued by Big University and received by Bob, claiming a name and a birthdate. The type of credential must be a fully qualified IRI or dereferencable to an IRI in the document context.
         </p>
-        <pre class="example prettyprint language-jsonld">
+        <pre class="example highlight language-jsonld">
 {
   "@context": "https://w3id.org/credentials/v1",
   "credential": [{
@@ -244,7 +244,7 @@
         <p class="issue">
           What property types are really going to appear in the credentials context? Do birthdate and governmentId make the cut?
         </p>
-        <pre class="example prettyprint language-jsonld">
+        <pre class="example highlight language-jsonld">
 {
   "@context": "https://w3id.org/credentials/v1"
   ...
@@ -276,7 +276,7 @@
         <p>
           The following example shows a defined achievement that an example model rocketry club established to issue to recipients who met a predetermined level of expertise in rocketry, as assessed within that organization's context.
         </p>
-        <pre class="example prettyprint language-jsonld">
+        <pre class="example highlight language-jsonld">
 {
   "@context": "https://w3id.org/credentials/v1",
   "id": "https://modelrockets.example.com/badges/l3r",
@@ -314,7 +314,7 @@
         <p>
           This example shows a "Bachelor of Arts" Defined Achievement as issued in a <a href="#Credential">Credential</a> and displayed within an <a href="#Identity">Identity</a> document. It appears as a child of a <a href="#badgeAssertion">badgeAssertion</a> claim type. the badge IRI ("id") value also appears in the Identity's "badge" property as an easily-queried listing of defined achievmements received by this identity.
         </p>
-        <pre class="example prettyprint language-jsonld">
+        <pre class="example highlight language-jsonld">
 {
   "@context": "https://w3id.org/credentials/v1",
   "id": "https://example.com/identities/bob",
@@ -405,7 +405,7 @@
         <p>
           The following example expresses an set of claims about an individual. The claim set has the id (here aliased to the JSON-LD keyword "@id") of the identity that is the recipient of the credential and the subject of the claims. Each shorthand claim ("image" and "name") have keywords that are terms defined in the document context that map these shorthand names to full IRIs. The claim about the subject's color uses a fully qualified IRI.
         </p>
-        <pre class="example prettyprint language-jsonld">
+        <pre class="example highlight language-jsonld">
 {
   "@context": ["https://w3id.org/credentials/v1", "https://w3id.org/identity/v1"],
   "id": "http://example.com/issuedCredentials/5",
@@ -448,7 +448,7 @@
 
 
         <section id="description" about="https://schema.org/description" typeof="rdfs:Property">
-          <h3><span property="rdfs:label">name</span></h3>
+          <h3><span property="rdfs:label">description</span></h3>
           <p property="rdfs:comment">
             A short description of the defining characteristics of an entity, typically a Defined Credential.
           </p>
@@ -618,7 +618,7 @@
         <section id="tags" about="https://schema.org/keywords" typeof="rdfs:Property">
           <h3><span property="rdfs:label">tags</span></h3>
           <p property="rdfs:comment">
-            A resource describing available information or data about accomplishments justifying the issuance of a credential.
+            Relevant keywords or tags used to describe an identity or defined credential. Open vocabulary: any term may be used.
           </p>
 
           <dl>
@@ -630,17 +630,49 @@
             </dd>
             <dt>Typically used by</dt>
             <dd>
+              <a href="#Identity">Identity</a>, 
+              <a href="#DefinedCredential">Defined Credential</a>
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              <a property="rdfs:range" resource="http://www.w3.org/2001/XMLSchema#string" href="http://www.w3.org/TR/xmlschema-2/#string">string</a>
+            </dd>
+          </dl>
+          <p class="issue">
+            This should appear in JSON as an array of strings. Is using the associated value for "string" sufficient?
+          </p>
+
+          <pre class="example highlight language-jsonld">
+{
+  "@context": "https://w3id.org/credentials/v1",
+  "tags": ["robots", "ninjas", "cattle wranglers"]
+}
+          </pre>
+        </section>
+
+
+        <section id="uid" about="https://w3id.org/credentials/#uid" typeof="rdfs:Property">
+          <h3><span property="rdfs:label">uid</span></h3>
+          <p property="rdfs:comment">
+            A unique identifier string for a credential. Deprecated in favor of using JSON-LD @id as a unique identifier.
+          </p>
+
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">deprecated</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Thing">Thing</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
               <a href="#DefinedCredentialAssertion">Defined Credential Assertion</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
-              url
+              <a property="rdfs:range" resource="http://www.w3.org/2001/XMLSchema#string" href="http://www.w3.org/TR/xmlschema-2/#string">string</a>
             </dd>
           </dl>
-
-          <p class="issue">
-            What markup is appropriate for a remote linked resource in the "associated value" field?
-          </p>
         </section>
 
   </section>
