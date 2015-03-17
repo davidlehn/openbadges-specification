@@ -191,7 +191,7 @@
           <dt>Parent Class</dt>
           <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Class</a></dd>
           <dt>Common Properties</dt>
-          <dd></dd>
+          <dd>type, <a href="#ClaimSet">claim</a>, expirationDate, signature</dd>
         </dl>
         <p>
           The following example is a signed Credential issued by Big University and received by Bob, claiming a name and a birthdate. The type of credential must be a fully qualified IRI or dereferencable to an IRI in the document context.
@@ -375,7 +375,7 @@
     <section>
       <h2>Properties</h2>
 
-      <section id="Claim" about="https://w3id.org/credentials/#claim" typeof="rdfs:Property">
+      <section id="claim" about="https://w3id.org/credentials/#claim" typeof="rdfs:Property">
         <h3><span property="rdfs:label">claim</span></h3>
         <p property="rdfs:comment">
           A claim is the statement of trust an issuer makes about a credential recipient. A set of property value pairs, where in each property the issuer asserts one quality or attribute of a credential earner or of an achievement attributable to the earner. Each claim property name is dereferencable to a term definition. 
@@ -403,7 +403,7 @@
         </dl>
 
         <p>
-          The following example expresses an set of claims about an individual. The claim set has the id (here aliased to the JSON-LD keyword "@id") of the identity that is the recipient of the credential and the subject of the claims. Each claim ("image" and "name") have keywords that are terms defined in the document context that map these shorthand names to full IRIs.
+          The following example expresses an set of claims about an individual. The claim set has the id (here aliased to the JSON-LD keyword "@id") of the identity that is the recipient of the credential and the subject of the claims. Each shorthand claim ("image" and "name") have keywords that are terms defined in the document context that map these shorthand names to full IRIs. The claim about the subject's color uses a fully qualified IRI.
         </p>
         <pre class="example prettyprint language-jsonld">
 {
@@ -413,16 +413,101 @@
   "claim": {
     "id": "http://example.org/users/kittensworth"
     "image": "http://placekitten.com/100/100/",
-    "name": "Sir Kittensworth"
+    "name": "Sir Kittensworth",
+    "https://schema.org/color": "chestnut"
   }
 }
           </pre>
         </section>
 
-        <section id="issueDate" about="https://w3id.org/credentials/#claim" typeof="rdfs:Property">
+
+        <section id="name" about="https://schema.org/name" typeof="rdfs:Property">
+          <h3><span property="rdfs:label">name</span></h3>
+          <p property="rdfs:comment">
+            The name of an entity, which could apply to an Identity or a Defined Credential.
+          </p>
+
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Thing">Thing</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
+              <a href="#Identity">Identity</a>, 
+              <a href="#DefinedCredential">Defined Credential</a>
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              <a property="rdfs:range" resource="http://www.w3.org/2001/XMLSchema#string" href="http://www.w3.org/TR/xmlschema-2/#string">string</a>
+            </dd>
+          </dl>
+        </section>
+
+
+        <section id="description" about="https://schema.org/description" typeof="rdfs:Property">
+          <h3><span property="rdfs:label">name</span></h3>
+          <p property="rdfs:comment">
+            A short description of the defining characteristics of an entity, typically a Defined Credential.
+          </p>
+
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Thing">Thing</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
+              <a href="#Identity">Identity</a>, 
+              <a href="#DefinedCredential">Defined Credential</a>
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              <a property="rdfs:range" resource="http://www.w3.org/2001/XMLSchema#string" href="http://www.w3.org/TR/xmlschema-2/#string">string</a>
+            </dd>
+          </dl>
+        </section>
+
+
+        <section id="description" about="https://schema.org/image" typeof="rdfs:Property">
+          <h3><span property="rdfs:label">image</span></h3>
+          <p property="rdfs:comment">
+            An image representing the thing, typically an Identity or a Defined Credential.
+          </p>
+
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Thing">Thing</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
+              <a href="#Identity">Identity</a>, 
+              <a href="#DefinedCredential">Defined Credential</a>,
+              <a href="#DefinedCredentialAssertion">Defined Credential Assertion</a>,
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              url, image dataUri
+            </dd>
+          </dl>
+
+          <p class="issue">
+            Historically in the Open Badges specification, the image property in either Defined Credential (BadgeClass) or Defined Credential Assertion could optionally be represented as a dataURI instead of a URL. This was suboptimal for a couple reasons. Should that option be outlawed, or is there a graceful way to denote that something might be an @id or a dataURI? Also, what markup is appropriate for a remote linked resource in the "associated value" field?
+          </p>
+        </section>
+
+
+        <section id="issueDate" about="https://w3id.org/credentials/#issueDate" typeof="rdfs:Property">
           <h3><span property="rdfs:label">issueDate</span></h3>
           <p property="rdfs:comment">
-            issuedDate is a DateTime
+            The date and/or time when a credential was issued.
           </p>
 
           <dl>
@@ -434,13 +519,128 @@
             </dd>
             <dt>Typically used by</dt>
             <dd>
-              <a href="#Credential">Credential</a>
+              <a href="#Credential">Credential</a>, 
+              <a href="#DefinedCredentialAssertion">DefinedCredentialAssertion</a>
             </dd>
             <dt>Associated value must be an</dt>
             <dd>
-              DateTime string
+              <a property="rdfs:range" resource="http://www.w3.org/2001/XMLSchema#dateTime" href="http://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</a>
             </dd>
           </dl>
+
+        </section>
+
+
+        <section id="expirationDate" about="https://w3id.org/credentials/#expirationDate" typeof="rdfs:Property">
+          <h3><span property="rdfs:label">expirationDate</span></h3>
+          <p property="rdfs:comment">
+            A date and/or time when a credential is considered expired by its issuer. After this date, the credential should no longer be considered valid.
+          </p>
+
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Intangible">Intangible</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
+              <a href="#Credential">Credential</a>, 
+              <a href="#DefinedCredentialAssertion">DefinedCredentialAssertion</a>
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              <a property="rdfs:range" resource="http://www.w3.org/2001/XMLSchema#dateTime" href="http://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</a>
+            </dd>
+          </dl>
+        </section>
+
+
+        <section id="criteria" about="https://w3id.org/credentials/#criteria" typeof="rdfs:Property">
+          <h3><span property="rdfs:label">criteria</span></h3>
+          <p property="rdfs:comment">
+            Requirements by which issuing a credential may be judged. Criteria serve to describe a Defined Credential more fully than its description and provide guidance to Issuers, Recipients, and Consumers.
+          </p>
+
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Thing">Thing</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
+              <a href="#DefinedCredential">Defined Credential</a>
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              url
+            </dd>
+          </dl>
+
+          <p class="issue">
+            What markup is appropriate for a remote linked resource in the "associated value" field?
+          </p>
+        </section>
+
+
+        <section id="evidence" about="https://w3id.org/credentials/#evidence" typeof="rdfs:Property">
+          <h3><span property="rdfs:label">evidence</span></h3>
+          <p property="rdfs:comment">
+            A resource describing available information or data about accomplishments justifying the issuance of a credential.
+          </p>
+
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Thing">Thing</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
+              <a href="#DefinedCredentialAssertion">Defined Credential Assertion</a>
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              url
+            </dd>
+          </dl>
+
+          <p class="issue">
+            What markup is appropriate for a remote linked resource in the "associated value" field?
+          </p>
+        </section>
+
+
+        <section id="tags" about="https://schema.org/keywords" typeof="rdfs:Property">
+          <h3><span property="rdfs:label">tags</span></h3>
+          <p property="rdfs:comment">
+            A resource describing available information or data about accomplishments justifying the issuance of a credential.
+          </p>
+
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Attribute of</dt>
+            <dd>
+              <a property="rdfs:domain" href="http://schema.org/Thing">Thing</a>
+            </dd>
+            <dt>Typically used by</dt>
+            <dd>
+              <a href="#DefinedCredentialAssertion">Defined Credential Assertion</a>
+            </dd>
+            <dt>Associated value must be an</dt>
+            <dd>
+              url
+            </dd>
+          </dl>
+
+          <p class="issue">
+            What markup is appropriate for a remote linked resource in the "associated value" field?
+          </p>
         </section>
 
   </section>
